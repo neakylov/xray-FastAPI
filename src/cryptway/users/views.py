@@ -1,17 +1,23 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 
-router = APIRouter()
+from cryptway.auth.service import auth_by_api_key
 
 
-@router.get("/{api_token}/users/{user_id}")
-async def get_user(api_token: str, user_id: int):
-    if api_token:
-        pass
+router = APIRouter(
+    dependencies=[Depends(auth_by_api_key)]
+)
 
-@router.post("/{api_token}/users")
-async def add_user(api_token: str, user_id: int, username: str):
+
+@router.get("/users/{user_id}")
+async def get_user(user_id: int):
     pass
 
-@router.patch("/{api_token}/users/{user_id}")
+
+@router.post("/users")
+async def add_user(user_id: int, username: str):
+    pass
+
+
+@router.patch("/users/{user_id}")
 async def update_user(api_token: str, user_id: int):
     pass
